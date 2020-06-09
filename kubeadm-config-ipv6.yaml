@@ -1,0 +1,22 @@
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: v1.18.2
+apiServer:
+  certSANs:
+  - 192.168.2.71
+controlPlaneEndpoint: "[2003:de:cf12:c800:a00:27ff:fecb:1759]:6443"
+networking:
+  serviceSubnet: "fd03::/112"
+  podSubnet: "2003:de:cf09:2900:eeee::/80"
+  dnsDomain: "cluster.local"
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 2003:de:cf12:c800:a00:27ff:fecb:1759
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: ipvs
+

@@ -1,0 +1,24 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: v1.18.2
+apiServer:
+  certSANs:
+  - 192.168.2.71
+controlPlaneEndpoint: 192.168.2.71:6443
+networking:
+  serviceSubnet: "172.16.0.0/16,fd03::/112"
+  podSubnet: "10.244.0.0/16,fd02::/80"
+  dnsDomain: "cluster.local"
+featureGates:
+  IPv6DualStack: true
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: ipvs
+featureGates:
+  IPv6DualStack: true
+---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+featureGates:
+  IPv6DualStack: true
